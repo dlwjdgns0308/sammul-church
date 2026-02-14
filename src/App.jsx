@@ -8,7 +8,7 @@ import {
 // --- Global Styles ---
 const GlobalStyles = () => (
   <style>{`
-    /* Noto Sans KR만 가져오기 (300:Light, 400:Regular, 500:Medium, 700:Bold, 900:Black) */
+    /* Noto Sans KR만 가져오기 */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
     
     body {
@@ -26,7 +26,7 @@ const GlobalStyles = () => (
     }
     
     .font-serif-kr {
-      font-family: 'Noto Sans KR', sans-serif; /* 요청대로 고딕 통일 */
+      font-family: 'Noto Sans KR', sans-serif;
       letter-spacing: -0.03em;
     }
     
@@ -116,16 +116,7 @@ const MENU_STRUCTURE = {
       { id: 'gallery', label: '행사 갤러리' }
     ] 
   },
-  training: { 
-    label: '양육과 훈련', 
-    sub: [
-      { id: 'basic', label: '기본 양육' },
-      { id: 'method', label: '교제와 기도' },
-      { id: 'bible', label: '성경과 묵상' },
-      { id: 'family', label: '가정생활' },
-      { id: 'doctrine', label: '교리·성경공부' }
-    ]
-  },
+  training: { label: '양육과 훈련', sub: [] }, // 세부 카테고리 제거 (통합)
   location: { label: '오시는 길', sub: [] }
 };
 
@@ -134,14 +125,16 @@ const Navigation = ({ activeMain, onNavigate, mobileMenuOpen, setMobileMenuOpen 
   return (
     <nav className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 h-20 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
+        {/* Logo */}
         <div className="flex items-center cursor-pointer gap-3" onClick={() => onNavigate('home')}>
           <div className="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white font-bold text-xl">S</div>
           <div className="flex flex-col">
-            <span className="text-[10px] text-gray-500 tracking-[0.2em] uppercase font-sans-kr">Korean Presbyterian Church</span>
+            <span className="text-[10px] text-gray-500 tracking-[0.2em] font-sans-kr font-bold">대한예수교장로회</span>
             <span className="text-xl font-bold text-gray-900 tracking-tight font-sans-kr">의정부 샘물교회</span>
           </div>
         </div>
         
+        {/* Desktop Menu */}
         <div className="hidden lg:flex items-center space-x-8 h-full">
           {Object.entries(MENU_STRUCTURE).map(([key, value]) => (
             <div key={key} className="relative group h-full flex items-center">
@@ -178,6 +171,7 @@ const Navigation = ({ activeMain, onNavigate, mobileMenuOpen, setMobileMenuOpen 
           ))}
         </div>
 
+        {/* Mobile Button */}
         <div className="lg:hidden">
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 text-gray-700">
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -185,6 +179,7 @@ const Navigation = ({ activeMain, onNavigate, mobileMenuOpen, setMobileMenuOpen 
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t absolute w-full shadow-xl z-50 max-h-[80vh] overflow-y-auto">
           {Object.entries(MENU_STRUCTURE).map(([key, value]) => (
@@ -292,9 +287,8 @@ const HomeContent = ({ onNavigate }) => (
   </div>
 );
 
-// 2. ABOUT (Sub-pages)
+// 2. ABOUT
 const AboutContent = ({ subPage }) => {
-  
   const renderSubPage = () => {
     switch(subPage) {
       case 'history':
@@ -306,7 +300,6 @@ const AboutContent = ({ subPage }) => {
                  1994년 첫 삽을 뜬 이후, 하나님께서 샘물교회를 어떻게 인도하셨는지 그 은혜의 발자취를 소개합니다.
                </p>
              </div>
-             
              {/* 1994 */}
              <div className="mb-24">
                <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
@@ -320,7 +313,6 @@ const AboutContent = ({ subPage }) => {
                </div>
                <FullWidthImage src="/images/history_1994.jpg" alt="첫삽" caption="1994년 4월 교회 부지 매입 및 첫 삽" />
              </div>
-
              {/* 2000 */}
              <div className="mb-24">
                <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
@@ -349,51 +341,41 @@ const AboutContent = ({ subPage }) => {
                </div>
                <FullWidthImage src="/images/history_2000.jpg" alt="입당예배" caption="2000년 1월 8일 입당예배" />
              </div>
-
              {/* Growth */}
              <div className="mb-24 bg-gray-50 py-16 px-4 -mx-4 md:-mx-8 lg:-mx-16">
                <h3 className="text-3xl font-bold text-center mb-8 font-sans-kr">은혜 가운데 성장</h3>
                <p className="text-center text-gray-600 mb-12 font-sans-kr">개척된 교회는 은혜 가운데 건강하게 성장하였습니다.</p>
-               
                <div className="max-w-5xl mx-auto space-y-16">
-                   {/* 주일학교 2장 */}
                    <div>
                        <FullWidthImage src="/images/history_growth_kids_1.jpg" alt="주일학교1" caption="주일학교 활동" />
                        <FullWidthImage src="/images/history_growth_kids_2.jpg" alt="주일학교2" />
                    </div>
-                   {/* 청소년부 3장 */}
                    <div>
                        <FullWidthImage src="/images/history_growth_youth_1.jpg" alt="청소년부1" caption="청소년부 활동" />
                        <FullWidthImage src="/images/history_growth_youth_2.jpg" alt="청소년부2" />
                        <FullWidthImage src="/images/history_growth_youth_3.jpg" alt="청소년부3" />
                    </div>
-                   {/* 청년부 2장 */}
                    <div>
                        <FullWidthImage src="/images/history_growth_young_1.jpg" alt="청년부1" caption="청년부 활동" />
                        <FullWidthImage src="/images/history_growth_young_2.jpg" alt="청년부2" />
                    </div>
-                   {/* 여전도회 2장 */}
                    <div>
                        <FullWidthImage src="/images/history_growth_women_1.jpg" alt="여전도회1" caption="여전도회 활동" />
                        <FullWidthImage src="/images/history_growth_women_2.jpg" alt="여전도회2" />
                    </div>
-                   {/* 남전도회 2장 */}
                    <div>
                        <FullWidthImage src="/images/history_growth_men_1.jpg" alt="남전도회1" caption="남전도회 활동" />
                        <FullWidthImage src="/images/history_growth_men_2.jpg" alt="남전도회2" />
                    </div>
-                   {/* 임직식 2장 */}
                    <div>
                        <FullWidthImage src="/images/history_growth_ordination_1.jpg" alt="임직식1" caption="임직식" />
                        <FullWidthImage src="/images/history_growth_ordination_2.jpg" alt="임직식2" />
                    </div>
-                   {/* 전체사진 */}
                    <div>
                        <FullWidthImage src="/images/history_growth_all.jpg" alt="전체사진" caption="전교인 전체사진" />
                    </div>
                </div>
              </div>
-
              {/* 2022 */}
              <div className="mb-24">
                <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
@@ -410,7 +392,6 @@ const AboutContent = ({ subPage }) => {
                </div>
                <FullWidthImage src="/images/history_rev_son.jpg" alt="손경헌 목사님" />
              </div>
-
              {/* 2023 */}
              <div className="mb-24">
                <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
@@ -438,7 +419,6 @@ const AboutContent = ({ subPage }) => {
                  <FullWidthImage src="/images/history_new_pastor_4.jpg" alt="청빙4" />
                </div>
              </div>
-
              {/* 2025 */}
              <div>
                <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
@@ -457,7 +437,6 @@ const AboutContent = ({ subPage }) => {
              </div>
           </div>
         );
-
       case 'pastor':
         return (
           <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
@@ -466,9 +445,7 @@ const AboutContent = ({ subPage }) => {
               <p className="text-xl font-bold text-blue-900 font-sans-kr">김찬이 목사</p>
               <p className="text-gray-500 mt-2 font-sans-kr">총신대학원 신학석사 (M.Div) / 일반대학원 조직신학 석사 (Th.M)</p>
             </div>
-            
             <FullWidthImage src="/images/pastor_profile.jpg" alt="김찬이 목사님" caption="김찬이 담임목사" />
-
             <div className="prose prose-lg text-gray-700 leading-loose max-w-none text-justify space-y-12 font-sans-kr">
               <div>
                 <h3 className="text-xl font-bold text-blue-900 mb-4 font-sans-kr">어린 시절과 회심</h3>
@@ -508,7 +485,7 @@ const AboutContent = ({ subPage }) => {
                   세월이 지났지만, 그때의 깨달음과 경험은 지금의 사역을 이끌어가는 중요한 원리가 되었습니다.
                 </p>
                 <p className="mt-4">
-                  목회자로 내적, 외적 부르심을 확인한 저는 2008년 총신대학원에 입학하여 신학 공부(m.div,목회학석사)를 하였습니다. 
+                  목회자로 내적, 외적 부르심을 확인한 저는 2008년 총신대학원에 입학하여 신학 공부(M.Div, 목회학석사)를 하였습니다. 
                   총신 신대원 과정은 축복의 시간이었습니다. 3년의 공부 시간은 꿀송이를 먹는 것과 같은 즐거운 시간이었습니다. 
                   신학공부를 통해 저의 체험적인 신앙이, 말씀에 기반을 둔 신앙으로 성장할 수 있었습니다. 
                   신학을 하면서 새롭게 깨닫고 놀라게 된 것이 있었습니다. 바로 개혁주의 신학의 깊이와 넓이였습니다. 
@@ -525,7 +502,7 @@ const AboutContent = ({ subPage }) => {
                   그리고 그 깨달음은 저의 사명이자 비전이 되었습니다.
                 </p>
                 <p>
-                  저는 이 비전을 실현하기 위해 학업이 더 필요함을 깨닫고 2019년 총신대학원 일반대학원에서 조직식학(th.m, 신학석사)공부를 하였습니다. 
+                  저는 이 비전을 실현하기 위해 학업이 더 필요함을 깨닫고 2019년 총신대학원 일반대학원에서 조직식학(Th.M, 신학석사)공부를 하였습니다. 
                   조직신학을 전문적으로 공부하면서 지식적으로 학적으로 더 성장하는 은혜와 축복을 경험했습니다. 
                   이때부터 직접 교재를 만들어 성도들에게 교리를 직접 가르치기 시작했고 풍성한 은혜를 경험하였습니다.
                 </p>
@@ -539,7 +516,6 @@ const AboutContent = ({ subPage }) => {
             </div>
           </div>
         );
-
       case 'vision':
         return (
           <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
@@ -587,7 +563,6 @@ const AboutContent = ({ subPage }) => {
                 ))}
               </div>
             </div>
-
             <div className="bg-gray-900 text-white p-12 rounded-2xl">
               <span className="text-blue-300 font-bold tracking-widest block mb-4 font-sans-kr">CORE VALUE 02</span>
               <h2 className="text-3xl font-bold mb-8 font-sans-kr">4대 교회 비전</h2>
@@ -606,8 +581,8 @@ const AboutContent = ({ subPage }) => {
                     </li>
                     <li className="bg-white/10 p-6 rounded-lg">
                       <strong className="block text-white mb-2 text-xl font-sans-kr">6.25와 손양원 목사님</strong>
-                      아들 동인,동일을 죽인 김재선을 아들을 삼고 6.25때 공산당이 오는 것을 알고도 나환자촌 애양원을 떠나지 않으면서 순교한 이야기!
-                      “그리스도교는 잘 사는 것이 목표인 종교가 아니라 잘 죽는 것이 목표인 종교”
+                      아들 동인,동일을 죽인 김재선을 아들을 삼고 6.25때 공산당이 오는 것을 알고도 나환자촌 애양원을 떠나지 않으면서 순교한 이야기! 
+                      “그리스도교는 잘 사는 것이 목표인 종교가 아니라 잘 죽는 것이 목표인 종교”라는 목사님의 말씀은 하나님 앞에 나의 삶을 멈추고 돌아보게 하는 역사였습니다.
                       <br/>
                       <a href="https://www.youtube.com/live/0O29xmcS1eE?si=2JTo6HX4VQjR-kcR" target="_blank" rel="noreferrer" className="text-blue-300 text-sm mt-2 inline-block hover:underline">▶ 손양원 목사님에 대한 설교 보기</a>
                     </li>
@@ -637,7 +612,6 @@ const AboutContent = ({ subPage }) => {
             </div>
           </div>
         );
-
       case 'people':
         return (
           <div className="max-w-5xl mx-auto px-4 py-16 animate-fade-in">
@@ -657,7 +631,6 @@ const AboutContent = ({ subPage }) => {
             </div>
           </div>
         );
-
       case 'recommend':
         return (
           <div className="max-w-4xl mx-auto px-4 py-16 grid gap-12 animate-fade-in">
@@ -689,7 +662,6 @@ const AboutContent = ({ subPage }) => {
             ))}
           </div>
         );
-
       default: return null;
     }
   };
@@ -813,7 +785,7 @@ const CommunityContent = ({ subPage }) => {
       case 'gallery':
         return (
           <div className="max-w-5xl mx-auto px-4 py-16 animate-fade-in">
-            <h2 className="text-3xl font-bold text-center mb-16 font-sans-kr">커뮤니티 / 행사사진</h2>
+            <h2 className="text-3xl font-bold text-center mb-16 font-sans-kr">행사사진</h2>
             <div className="space-y-24">
               <div>
                 <h3 className="text-2xl font-bold mb-6 border-l-4 border-blue-900 pl-4 font-sans-kr">학습세례식</h3>
@@ -831,12 +803,12 @@ const CommunityContent = ({ subPage }) => {
               </div>
               <div>
                 <h3 className="text-2xl font-bold mb-6 border-l-4 border-blue-900 pl-4 font-sans-kr">11월 비전센터 완공</h3>
-                <FullWidthImage src="/images/vision_seminar_1.jpg" alt="세미나1" />
+                <FullWidthImage src="/images/vision_seminar_1.jpg" alt="세미나1" caption="세미나실" />
                 <FullWidthImage src="/images/vision_seminar_2.jpg" alt="세미나2" />
-                <FullWidthImage src="/images/vision_seminar_3.jpg" alt="세미나3" caption="세미나실 전경" />
+                <FullWidthImage src="/images/vision_seminar_3.jpg" alt="세미나3" />
                 <FullWidthImage src="/images/vision_lobby.jpg" alt="로비" caption="카페 로비" />
-                <FullWidthImage src="/images/vision_nursery_1.jpg" alt="유아실1" />
-                <FullWidthImage src="/images/vision_nursery_2.jpg" alt="유아실2" caption="유아실" />
+                <FullWidthImage src="/images/vision_nursery_1.jpg" alt="유아실1" caption="유아실" />
+                <FullWidthImage src="/images/vision_nursery_2.jpg" alt="유아실2" />
               </div>
             </div>
           </div>
@@ -855,78 +827,83 @@ const CommunityContent = ({ subPage }) => {
 
 // 5. TRAINING
 const TrainingContent = ({ subPage }) => {
-  const renderSubPage = () => {
-    switch(subPage) {
-      case 'basic':
-        return (
-          <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
-             <h3 className="text-2xl font-bold mb-4 text-blue-900 font-sans-kr">기본 양육 과정</h3>
-             <FullWidthImage src="/images/training_basic.jpg" alt="기본양육" />
-             <ul className="list-disc pl-5 space-y-4 text-lg text-gray-700 mt-8 font-sans-kr">
-               <li><strong>새가족 교육(5주):</strong> 새 가족으로 기본적인 신앙생활과 교회 생활을 어떻게 해야 하는지를 배웁니다.</li>
-               <li><strong>복음의 기초(8주):</strong> 영광스러운 복음을 깊이 있고 체계적으로 배웁니다.</li>
-               <li><strong>크리스찬의 5대 확신(5주):</strong> 복음을 아는 성도를 넘어 확신과 믿음으로 살아가는 성도의 삶을 배웁니다.</li>
-             </ul>
-          </div>
-        );
-      case 'method':
-        return (
-          <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
-            <h3 className="text-2xl font-bold mb-4 text-blue-900 font-sans-kr">하나님과 교제 하는 방법</h3>
-            <p className="text-gray-700 mb-8 text-lg font-sans-kr">
-              구원받은 자녀는 하나님과 교제하는 법을 배워야 합니다. 하나님의 뜻을 말씀을 통해 어떻게 분별하는지 묵상훈련을 통해서 배웁니다. 
-              또 기도훈련을 통해 성도가 어떻게 하나님의 공급하심을 받고 살아가는지를 교육 받습니다.
-            </p>
-            <ul className="space-y-2 text-lg text-gray-700 font-bold font-sans-kr">
-              <li>묵상훈련(4주)</li>
-              <li>기도훈련(4주)</li>
-            </ul>
-          </div>
-        );
-      case 'bible':
-        return (
-          <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
-            <h3 className="text-2xl font-bold mb-4 text-blue-900 font-sans-kr">성경 읽기와 묵상</h3>
-            <p className="text-gray-700 mb-8 text-lg font-sans-kr">
-              샘물교회는 말씀사역의 비전에 따라, 성경읽기와 큐티 사역에 힘쓰고 있습니다.
-              성경읽기는 리딩지저스 읽기 프로그램을 따라 공동체가 함께 읽어가고 있고 또 함께 잘 읽어갈 수 있도록 통독반을 운영하고 있습니다.
-            </p>
-            <p className="text-gray-700 text-lg font-sans-kr">
-              큐티사역은 김찬이 목사님이 직접 만든 <strong>은혜의 샘물 큐티집</strong>으로 묵상하고 있습니다. 
-              묵상에 대한 정기적인 훈련을 통해 묵상하는 법을 배우고 함께 나누는 모임을 진행합니다.
-            </p>
-            <a href="https://www.readingjesus.net/main/" target="_blank" rel="noreferrer" className="text-blue-600 underline mt-4 block font-sans-kr">▶ 리딩지저스 바로가기</a>
-          </div>
-        );
-      case 'family':
-        return (
-          <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
-            <h3 className="text-2xl font-bold mb-4 text-blue-900 font-sans-kr">그리스도인의 가정생활</h3>
-            <p className="text-gray-700 text-lg font-sans-kr">
-               성경적인 가정생활을 배움으로 결혼 예비학교의 교육뿐만 아니라, 결혼 생활에서 일어나는 많은 갈등을 해결하는 지침과 교육을 제공합니다. 
-               또 부모가 성경적인 자녀교육을 어떻게 해야하는지를 배웁니다. (10주)
-            </p>
-          </div>
-        );
-      case 'doctrine':
-        return (
-          <div className="max-w-4xl mx-auto px-4 py-16 animate-fade-in">
-            <h3 className="text-2xl font-bold mb-4 text-blue-900 font-sans-kr">기독교 교리와 성경공부</h3>
-            <p className="text-gray-700 text-lg font-sans-kr">
-               말씀 사역의 비전에 따라 2년 동안 매주 수요일 오후 7시 30분 개혁주의 교리특강 진행하였습니다. 
-               또 성경 66권을 한 권씩 공부하며 배웠습니다. 성도가 유투브 자료를 통해 개인학습을 하도록 코칭합니다. 
-               또 추가적인 교육을 통해 배울 수 있습니다.
-            </p>
-          </div>
-        );
-       default: return null;
-    }
-  };
-
   return (
-    <div className="bg-white font-sans-kr">
+    <div className="bg-white font-sans-kr animate-fade-in">
       <PageHeader title="양육과 훈련" subtitle="TRAINING" image="/images/training_basic.jpg" />
-      {renderSubPage()}
+      
+      <div className="max-w-4xl mx-auto px-4 py-24 space-y-24">
+        {/* 1. 기본 양육 과정 */}
+        <div>
+           <div className="flex items-end gap-4 border-b-2 border-black pb-4 mb-8">
+               <span className="text-6xl font-bold text-gray-200 leading-none">01</span>
+               <h3 className="text-2xl font-bold text-black pb-1 font-sans-kr">기본 양육 과정</h3>
+           </div>
+           <FullWidthImage src="/images/training_basic.jpg" alt="기본양육" />
+           <ul className="list-disc pl-5 space-y-4 text-lg text-gray-700 mt-8 font-sans-kr">
+             <li><strong>새가족 교육(5주):</strong> 새 가족으로 기본적인 신앙생활과 교회 생활을 어떻게 해야 하는지를 배웁니다.</li>
+             <li><strong>복음의 기초(8주):</strong> 영광스러운 복음을 깊이 있고 체계적으로 배웁니다.</li>
+             <li><strong>크리스찬의 5대 확신(5주):</strong> 복음을 아는 성도를 넘어 확신과 믿음으로 살아가는 성도의 삶을 배웁니다.</li>
+           </ul>
+        </div>
+
+        {/* 2. 하나님과 교제 하는 방법 */}
+        <div>
+          <div className="flex items-end gap-4 border-b-2 border-black pb-4 mb-8">
+               <span className="text-6xl font-bold text-gray-200 leading-none">02</span>
+               <h3 className="text-2xl font-bold text-black pb-1 font-sans-kr">하나님과 교제 하는 방법</h3>
+           </div>
+          <p className="text-gray-700 mb-8 text-lg font-sans-kr">
+            구원받은 자녀는 하나님과 교제하는 법을 배워야 합니다. 하나님의 뜻을 말씀을 통해 어떻게 분별하는지 묵상훈련을 통해서 배웁니다. 
+            또 기도훈련을 통해 성도가 어떻게 하나님의 공급하심을 받고 살아가는지를 교육 받습니다.
+          </p>
+          <ul className="space-y-2 text-lg text-gray-700 font-bold font-sans-kr">
+            <li>묵상훈련(4주)</li>
+            <li>기도훈련(4주)</li>
+          </ul>
+        </div>
+
+        {/* 3. 성경 읽기와 묵상 */}
+        <div>
+          <div className="flex items-end gap-4 border-b-2 border-black pb-4 mb-8">
+               <span className="text-6xl font-bold text-gray-200 leading-none">03</span>
+               <h3 className="text-2xl font-bold text-black pb-1 font-sans-kr">성경 읽기와 묵상</h3>
+           </div>
+          <p className="text-gray-700 mb-8 text-lg font-sans-kr">
+            샘물교회는 말씀사역의 비전에 따라, 성경읽기와 큐티 사역에 힘쓰고 있습니다.
+            성경읽기는 리딩지저스 읽기 프로그램을 따라 공동체가 함께 읽어가고 있고 또 함께 잘 읽어갈 수 있도록 통독반을 운영하고 있습니다.
+          </p>
+          <p className="text-gray-700 text-lg font-sans-kr">
+            큐티사역은 김찬이 목사님이 직접 만든 <strong>은혜의 샘물 큐티집</strong>으로 묵상하고 있습니다. 
+            묵상에 대한 정기적인 훈련을 통해 묵상하는 법을 배우고 함께 나누는 모임을 진행합니다.
+          </p>
+          <a href="https://www.readingjesus.net/main/" target="_blank" rel="noreferrer" className="text-blue-600 underline mt-4 block font-sans-kr">▶ 리딩지저스 바로가기</a>
+        </div>
+
+        {/* 4. 그리스도인의 가정생활 */}
+        <div>
+          <div className="flex items-end gap-4 border-b-2 border-black pb-4 mb-8">
+               <span className="text-6xl font-bold text-gray-200 leading-none">04</span>
+               <h3 className="text-2xl font-bold text-black pb-1 font-sans-kr">그리스도인의 가정생활</h3>
+           </div>
+          <p className="text-gray-700 text-lg font-sans-kr">
+             성경적인 가정생활을 배움으로 결혼 예비학교의 교육뿐만 아니라, 결혼 생활에서 일어나는 많은 갈등을 해결하는 지침과 교육을 제공합니다. 
+             또 부모가 성경적인 자녀교육을 어떻게 해야하는지를 배웁니다. (10주)
+          </p>
+        </div>
+
+        {/* 5. 기독교 교리와 성경공부 */}
+        <div>
+          <div className="flex items-end gap-4 border-b-2 border-black pb-4 mb-8">
+               <span className="text-6xl font-bold text-gray-200 leading-none">05</span>
+               <h3 className="text-2xl font-bold text-black pb-1 font-sans-kr">기독교 교리와 성경공부</h3>
+           </div>
+          <p className="text-gray-700 text-lg font-sans-kr">
+             말씀 사역의 비전에 따라 2년 동안 매주 수요일 오후 7시 30분 개혁주의 교리특강 진행하였습니다. 
+             또 성경 66권을 한 권씩 공부하며 배웠습니다. 성도가 유투브 자료를 통해 개인학습을 하도록 코칭합니다. 
+             또 추가적인 교육을 통해 배울 수 있습니다.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
