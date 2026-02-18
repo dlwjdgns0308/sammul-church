@@ -8,7 +8,7 @@ import {
 // --- Global Styles ---
 const GlobalStyles = () => (
   <style>{`
-    /* Noto Sans KR만 가져오기 */
+    /* Noto Sans KR만 가져오기 (300:Light, 400:Regular, 500:Medium, 700:Bold, 900:Black) */
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
     
     body {
@@ -26,7 +26,7 @@ const GlobalStyles = () => (
     }
     
     .font-serif-kr {
-      font-family: 'Noto Sans KR', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif; /* 요청대로 고딕 통일 */
       letter-spacing: -0.03em;
     }
     
@@ -116,7 +116,7 @@ const MENU_STRUCTURE = {
       { id: 'gallery', label: '행사 갤러리' }
     ] 
   },
-  training: { label: '양육과 훈련', sub: [] }, // 세부 카테고리 제거 (통합)
+  training: { label: '양육과 훈련', sub: [] },
   location: { label: '오시는 길', sub: [] }
 };
 
@@ -125,9 +125,19 @@ const Navigation = ({ activeMain, onNavigate, mobileMenuOpen, setMobileMenuOpen 
   return (
     <nav className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 h-20 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
-        {/* Logo */}
+        {/* Logo Section */}
         <div className="flex items-center cursor-pointer gap-3" onClick={() => onNavigate('home')}>
-          <div className="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white font-bold text-xl">S</div>
+          {/* 대한예수교장로회 로고 이미지 (logo.png) */}
+          <div className="w-12 h-12 flex items-center justify-center">
+            <img 
+              src="/images/logo.jpg" 
+              alt="교회 로고" 
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                e.target.style.display = 'none'; // 이미지가 없으면 숨김
+              }}
+            />
+          </div>
           <div className="flex flex-col">
             <span className="text-[10px] text-gray-500 tracking-[0.2em] font-sans-kr font-bold">대한예수교장로회</span>
             <span className="text-xl font-bold text-gray-900 tracking-tight font-sans-kr">의정부 샘물교회</span>
